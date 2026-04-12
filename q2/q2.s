@@ -30,11 +30,11 @@ main:
         slli x6,x6,3 # x6=(i+1)*8 argv pointers are 8 bytes
         add x6,s1,x6 # x6=address of argv[i+1]
         ld x10,0(x6) # x10=value of argv[i+1] (string)
-        addi sp,sp,-8 # saves x5 since calling atoi can change it
-        sd x5,0(sp)
+        addi sp,sp,-16 # saves x5 as calling might change it
+        sd x5,8(sp)
         call atoi # converts to integer
-        ld x5,0(sp) # restore x5 after call
-        addi sp,sp,8
+        ld x5,8(sp) # restore x5 after call
+        addi sp,sp,16
         slli x7,x5,2 # x7=i*4 int offset
         add x28,s3,x7 # x28= address of arr[i]
         sw x10,0(x28) # arr[i]=integer
@@ -91,20 +91,20 @@ main:
         slli x6,x5,2 # x6=i*4
         add x6,s4,x6 # x6 correct address
         lw x11,0(x6) # x11 value in ans array
-        addi sp,sp,-8 # saves x5 as calling might change it
-        sd x5,0(sp)
+        addi sp,sp,-16 # saves x5 as calling might change it
+        sd x5,8(sp)
         la x10,fmt_d
         call printf
-        ld x5,0(sp) # restore x5 after call
-        addi sp,sp,8
+        ld x5,8(sp) # restore x5 after call
+        addi sp,sp,16
         addi x6,x5,1 # x6=i+1
         bge x6,s2,exit # last element 
         la x10,fmt_space
-        addi sp,sp,-8 # saves x5 as calling might change it
-        sd x5,0(sp)
+        addi sp,sp,-16 # saves x5 as calling might change it
+        sd x5,8(sp)
         call printf
-        ld x5,0(sp) # restore x5 after call
-        addi sp,sp,8
+        ld x5,8(sp) # restore x5 after call
+        addi sp,sp,16
         addi x5,x5,1 # index=x5+1
         beq x0,x0,loop2
     exit:
