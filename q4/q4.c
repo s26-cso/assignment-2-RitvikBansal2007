@@ -13,7 +13,6 @@ int main()
         strcat(s1,s3); 
         // s1 ="./lib<op>.so"
         void *library=dlopen(s1,RTLD_LAZY);
-        if(!library) continue; // if doesn't exist go for next input
         int(*operation)(int,int)=dlsym(library,s2);// getting operation function from library
         printf("%d\n",operation(n,m));
         dlclose(library); // closing for 2 gb limit
